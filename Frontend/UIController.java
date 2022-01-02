@@ -4,16 +4,26 @@ import java.awt.Color;
 import java.awt.Font;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.EventListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.event.MouseInputAdapter;
+
+import org.w3c.dom.events.MouseEvent;
+import java.awt.MouseInfo;
+import java.awt.Point;
 
 import Backend.IGameLogic;
 import Frontend.Markers.IMarker;
 import Frontend.Markers.ISpawner;
+import Frontend.Markers.Marker;
+import Frontend.Markers.Spawner;
 import Global.Factory;
+import Global.Logger;
 import Frontend.Markers.IMarker.Markers;
 
 public class UIController {
@@ -34,7 +44,7 @@ public class UIController {
     public IMarker floatingMarker;
 
     public Btn b;
-
+    public IMarker mark;
 
     UIController(IGameLogic gL, Factory fac)
     {
@@ -46,6 +56,11 @@ public class UIController {
         resultsCheckPanels = new ArrayList<JPanel>();
 
         createMainField();
+        //createFloatingMarker(factory.createMarker(Markers.OrangeMarker));
+
+        MouseEvents mEvents = new MouseEvents(this);
+        window.addMouseListener(mEvents);
+        window.addMouseMotionListener(mEvents);
         
         window.setVisible(true);
     }
@@ -81,7 +96,7 @@ public class UIController {
         {
             ISpawner s = spawners.get(i);
             s.setPosition(215 + 75*i, 815);
-            window.add(s.getJButton());  
+            window.add((Spawner)s);  
         }
 
         window.add(spawnersPanel);  
@@ -105,17 +120,59 @@ public class UIController {
             window.add(gamePanels.get(i));
         }
 
-        b = new Btn();
-        b.changeColor(Color.CYAN);
-        b.setBounds(0, 0, 100, 100);
-        window.add(b);
-
+        // b = new Btn();
+        // b.changeColor(Color.CYAN);
+        // b.setBounds(50, 0, 10, 10);
+        // window.add(b);
     }
 
     public void createFloatingMarker(IMarker m)
     {
-        floatingMarker = m;
-        window.add(m.getJPanel());
+        Logger.log("Creating marker" + this.floatingMarker);
+
+        if (this.floatingMarker != null)
+            removeDraggedMarker();
+
+        this.floatingMarker = m;
+        window.add((Marker)floatingMarker);
     }
 
+    public Boolean isMarkerBeingDragged()
+    {
+        return floatingMarker != null ? true : false;
+    }
+    
+    public void removeDraggedMarker()
+    {
+        window.remove((Marker)this.floatingMarker);
+        this.floatingMarker = null;
+        Logger.log("Removed old floating marker" + this.floatingMarker);
+        updateFrame();
+    }
+
+    public void updateFrame()
+    {
+        SwingUtilities.updateComponentTreeUI(this.window);
+    }
+
+    public Boolean tryToPlaceMarker()
+    {
+        Logger.log("Trying to place marker");
+        //Place marker
+        if(false)
+        {
+            Logger.log("Placed marker");
+            removeDraggedMarker();
+            return true;
+        }
+        
+        return false;
+    }
+
+    public void updateDraggedMarkerCords()
+    {
+        Point p = MouseInfo.getPointerInfo().getLocation();
+        this.floatingMarker.setPosition(p.x - 30, p.y - 50);
+        updateFrame();
+    }
 }

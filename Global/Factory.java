@@ -14,18 +14,20 @@ public class Factory {
 
     public IMarker createMarker(Markers markerType)
     {
-        if (markerType == Markers.BlueMarker)
-            return new Marker(Color.blue);
-        if (markerType == Markers.GreenMarker)
-            return new Marker(Color.blue);
-        if (markerType == Markers.RedMarker)
-            return new Marker(Color.red);
-        if (markerType == Markers.PinkMarker)
-            return new Marker(Color.pink);
-        if (markerType == Markers.OrangeMarker)
-            return new Marker(Color.orange);
+        return new Marker(markerType);
 
-        return null;
+        // if (markerType == Markers.BlueMarker)
+        //     return new Marker(Color.blue);
+        // if (markerType == Markers.GreenMarker)
+        //     return new Marker(Color.blue);
+        // if (markerType == Markers.RedMarker)
+        //     return new Marker(Color.red);
+        // if (markerType == Markers.PinkMarker)
+        //     return new Marker(Color.pink);
+        // if (markerType == Markers.OrangeMarker)
+        //     return new Marker(Color.orange);
+
+        // return null;
     }
 
     public IGameLogic getGameLogic()

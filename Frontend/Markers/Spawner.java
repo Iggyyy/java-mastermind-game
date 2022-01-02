@@ -8,7 +8,7 @@ import Frontend.UIController;
 import Frontend.Markers.IMarker.Markers;
 import Global.Factory;
 
-public class Spawner implements ISpawner, ActionListener {
+public class Spawner extends JButton implements ISpawner {
     
     private Factory factory;
     private Markers ownMarkerType;
@@ -16,11 +16,25 @@ public class Spawner implements ISpawner, ActionListener {
     private UIController UI;
 
     public Spawner(UIController ui, Factory _fac, Markers _ownMarkerType){
+        super();
         factory = _fac;
         UI = ui;
-        ownButton = new JButton();
-        ownButton.setBounds(0, 0, 50, 50);
+        this.setBounds(this.getLocation().x, this.getLocation().y, 50, 50);
+        ownMarkerType = _ownMarkerType;
         setColor(_ownMarkerType);
+
+
+        this.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+
+                IMarker m = _fac.createMarker(_ownMarkerType);
+                m.setPosition(100, 15);
+                ui.createFloatingMarker(m);
+
+                System.err.print("Created marker!\n");
+            }
+        });
     }
 
     private Markers getMarkerType(){
@@ -30,15 +44,15 @@ public class Spawner implements ISpawner, ActionListener {
     private void setColor(Markers m)
     {
         if (m == Markers.BlueMarker)
-            ownButton.setBackground(Color.blue);
+            this.setBackground(Color.blue);
         if (m == Markers.GreenMarker)
-            ownButton.setBackground(Color.green);
+            this.setBackground(Color.green);
         if (m == Markers.RedMarker)
-            ownButton.setBackground(Color.red);
+            this.setBackground(Color.red);
         if (m == Markers.PinkMarker)
-            ownButton.setBackground(Color.pink);
+            this.setBackground(Color.pink);
         if (m == Markers.OrangeMarker)
-            ownButton.setBackground(Color.orange);
+            this.setBackground(Color.orange);
     }
     
     public IMarker instantiateMarker() {
@@ -50,17 +64,7 @@ public class Spawner implements ISpawner, ActionListener {
     }
 
     public void setPosition(int x, int y) {
-        ownButton.setLocation(x, y);
+        this.setLocation(x, y);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        
-        IMarker m = instantiateMarker();
-        m.setPosition(50, 50);
-        UI.createFloatingMarker(m);
-
-        System.err.print("Clicked");
-        
-    }
 }
