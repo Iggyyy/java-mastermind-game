@@ -15,11 +15,11 @@ public class MainController {
         Factory classFactory = new Factory();
 
         //Create necessary class instances
-        IGameLogic gameLogic = classFactory.getGameLogicClass();
+        IGameLogic gameLogic = classFactory.getGameLogic();
         gameLogic.initializeGame();
 
         
-        UIController uiController = new UIController(gameLogic);
+        UIController uiController = new UIController(gameLogic, classFactory);
 
     }
 }
