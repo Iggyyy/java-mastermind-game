@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EventListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +20,10 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 
 import Backend.IGameLogic;
+import Frontend.Markers.CheckButton;
+import Frontend.Markers.Grabber;
+import Frontend.Markers.ICheckButton;
+import Frontend.Markers.IGrabber;
 import Frontend.Markers.IMarker;
 import Frontend.Markers.ISpawner;
 import Frontend.Markers.Marker;
@@ -42,9 +48,14 @@ public class UIController {
     public ArrayList<JPanel> resultsCheckPanels;
     public ArrayList<JPanel> gamePanels;
     public IMarker floatingMarker;
+    public ArrayList<IGrabber> grabbers;
+    public ArrayList<IMarker> resultMarkers;
+    public ArrayList<ICheckButton> checkButtons;
 
     public Btn b;
     public IMarker mark;
+
+    public Markers[] goalPattern;
 
     UIController(IGameLogic gL, Factory fac)
     {
@@ -54,7 +65,11 @@ public class UIController {
         spawners = new ArrayList<ISpawner>();
         gamePanels = new ArrayList<JPanel>();
         resultsCheckPanels = new ArrayList<JPanel>();
+        grabbers = new ArrayList<IGrabber>();
+        resultMarkers = new ArrayList<IMarker>();
+        checkButtons = new ArrayList<ICheckButton>();
 
+        createGoalPattern();
         createMainField();
         //createFloatingMarker(factory.createMarker(Markers.OrangeMarker));
 
@@ -92,7 +107,7 @@ public class UIController {
         spawnersPanel.setBounds(200, 800, 385, 80);
         spawnersPanel.setBackground(Color.lightGray);
 
-        for (int i = 0; i<spawners.size(); i++)
+        for (int i = 0; i<spawners.size()-2; i++)
         {
             ISpawner s = spawners.get(i);
             s.setPosition(215 + 75*i, 815);
@@ -113,17 +128,25 @@ public class UIController {
 
         for (int i=0; i<6; i++)
         {
+            for (int j=0; j<4; j++)
+            {
+                IGrabber grabber = factory.createGrabber(new Point(235 + j*85,165 + 100*i), i, j);
+                grabbers.add(grabber);
+                window.add((Grabber)grabber);
+            }
+
             JPanel p = new JPanel();
             p.setBounds(200, 150 + 100*i, 385, 80);
             p.setBackground(Color.CYAN);
             gamePanels.add(p);
             window.add(gamePanels.get(i));
+
+            ICheckButton cb = new CheckButton(this, i);
+            cb.setBtnPosition(610, 165 + 100 * i);
+            checkButtons.add(cb);
+            window.add((CheckButton)cb);
         }
 
-        // b = new Btn();
-        // b.changeColor(Color.CYAN);
-        // b.setBounds(50, 0, 10, 10);
-        // window.add(b);
     }
 
     public void createFloatingMarker(IMarker m)
@@ -175,4 +198,28 @@ public class UIController {
         this.floatingMarker.setPosition(p.x - 30, p.y - 50);
         updateFrame();
     }
+
+    private void createGoalPattern()
+    {
+        goalPattern = new Markers[4];
+        for (int i =0 ; i<4; i++)
+            goalPattern[i] = Markers.values()[new Random().nextInt(4)];
+    }
+
+    public void displayResultsInRow(int row, Markers[] resultMarkersArr){
+
+        Arrays.sort(resultMarkersArr);
+        for (int i = 0; i<4; i++){
+            if(resultMarkersArr[i] != null)
+            {
+                IMarker newM = factory.createMarker(resultMarkersArr[i]);
+                newM.changeSize(20);
+                newM.setPosition(25 + i*25, 150 + 100*row + 25 * i%2);
+                resultMarkers.add(newM);
+                window.add((Marker)newM);
+            }
+        }
+    }
+
+
 }

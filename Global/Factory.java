@@ -8,7 +8,7 @@ import Backend.*;
 import Frontend.*;
 import Frontend.Markers.*;
 import Frontend.Markers.IMarker.Markers;
-
+import java.awt.Point;
 //Dependency Injection
 public class Factory {
 
@@ -38,6 +38,11 @@ public class Factory {
     public ISpawner createSpawner(UIController ui, Factory fac, Markers markerType)
     {
         return new Spawner(ui, fac, markerType);
+    }
+
+    public IGrabber createGrabber(Point locationPoint, int row, int id)
+    {
+        return new Grabber(locationPoint, row, id);
     }
 
 }

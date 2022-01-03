@@ -41,6 +41,20 @@ public class Marker extends JPanel implements IMarker{
             this.setBackground(Color.pink);
         if (m == Markers.OrangeMarker)
             this.setBackground(Color.orange);
+        if (m == Markers.BlackMarker)
+            this.setBackground(Color.black);
+        if (m == Markers.WhiteMarker)
+            this.setBackground(Color.white);
+    }
+
+    @Override
+    public Markers getMarkerType() {
+        return selfMarker;
+    }
+
+    @Override
+    public void changeSize(int newSize) {
+        this.setSize(newSize, newSize);
     }
     
 }
