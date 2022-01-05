@@ -14,8 +14,6 @@ public class CheckButton extends JButton implements ICheckButton {
     UIController UI;
     int row;
 
-
-
     public CheckButton(UIController ui, int _row)
     {
         super();
@@ -24,7 +22,6 @@ public class CheckButton extends JButton implements ICheckButton {
         this.setSize(50, 50);
         this.setBackground(Color.LIGHT_GRAY);
 
-        //TODO - SPAWNING NOT WORKING!!!!!!
         this.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -36,20 +33,29 @@ public class CheckButton extends JButton implements ICheckButton {
 
     @Override
     public void checkRow() {
+        System.err.print("Checking row!!\n");
         Markers[] pattern = new Markers[4];
 
         for (IGrabber g : UI.grabbers)
         {
             if(g.getRow() == row)
-                pattern[g.getID()] = g.getGrabbedMarkerType();
+            {
+                try {
+                    pattern[g.getID()] = g.getGrabbedMarkerType();
+                } catch (Exception e) {
+                    System.err.print(e);
+                }
+                
+            }
         }
-
+        UI.nextTurn();
         Markers[] result = getCheckRowResultMarkers(pattern);
         UI.displayResultsInRow(row, result);
     }
 
     public Markers[] getCheckRowResultMarkers(Markers[] guessPattern)
     {
+        //TODO NOT WORKING
         Markers[] ret = new Markers[4];
         Markers[] goalPattern = UI.goalPattern;
 

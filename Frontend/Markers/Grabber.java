@@ -1,6 +1,8 @@
 package Frontend.Markers;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -24,6 +26,7 @@ public class Grabber extends JPanel implements IGrabber {
     @Override
     public void grabMarker(IMarker marker) {
         storedMarker = marker;
+        storedMarker.setPosition(this.getPosition().x, this.getPosition().y);
     }
 
     @Override
@@ -40,4 +43,34 @@ public class Grabber extends JPanel implements IGrabber {
     {
         return id;
     }
+
+    @Override
+    public Point getPosition() 
+    {
+        return this.getLocation();
+    }
+
+    @Override
+    public Boolean checkIfContainsPoint(JFrame frame, Point p) 
+    { 
+        
+        Point pp = SwingUtilities.convertPoint(frame, p, this);
+
+
+        System.err.print(p);
+        System.err.print(pp);
+        System.err.print(this.getLocation());
+        System.err.print(this.getRow());
+        System.err.print(this.contains(pp));
+        System.err.print('\n');
+
+        return this.contains(pp);
+    }
+
+    @Override
+    public IMarker getMarker() {
+        return this.storedMarker;
+    }
+
+
 }

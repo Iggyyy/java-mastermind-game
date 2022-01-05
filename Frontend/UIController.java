@@ -10,6 +10,7 @@ import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
@@ -34,6 +35,9 @@ import Frontend.Markers.IMarker.Markers;
 
 public class UIController {
 
+    //Variables
+    public int currentTurn = 0;
+
     //Classes
     IGameLogic gameLogic;
     Factory factory;
@@ -55,6 +59,8 @@ public class UIController {
     public Btn b;
     public IMarker mark;
 
+    //MAKE JLAYEREDPANE
+    public JLayeredPane layeredPane;
     public Markers[] goalPattern;
 
     UIController(IGameLogic gL, Factory fac)
@@ -69,6 +75,8 @@ public class UIController {
         resultMarkers = new ArrayList<IMarker>();
         checkButtons = new ArrayList<ICheckButton>();
 
+        layeredPane = new JLayeredPane();
+        layeredPane.setSize(700, 1000);
         createGoalPattern();
         createMainField();
         //createFloatingMarker(factory.createMarker(Markers.OrangeMarker));
@@ -132,19 +140,21 @@ public class UIController {
             {
                 IGrabber grabber = factory.createGrabber(new Point(235 + j*85,165 + 100*i), i, j);
                 grabbers.add(grabber);
-                window.add((Grabber)grabber);
+                layeredPane.add((Grabber)grabber, JLayeredPane.PALETTE_LAYER);
             }
 
             JPanel p = new JPanel();
             p.setBounds(200, 150 + 100*i, 385, 80);
             p.setBackground(Color.CYAN);
             gamePanels.add(p);
-            window.add(gamePanels.get(i));
+            layeredPane.add(gamePanels.get(i), JLayeredPane.FRAME_CONTENT_LAYER);
 
             ICheckButton cb = new CheckButton(this, i);
             cb.setBtnPosition(610, 165 + 100 * i);
             checkButtons.add(cb);
-            window.add((CheckButton)cb);
+            layeredPane.add((CheckButton)cb, JLayeredPane.FRAME_CONTENT_LAYER);
+            
+            window.add(layeredPane);
         }
 
     }
@@ -157,7 +167,8 @@ public class UIController {
             removeDraggedMarker();
 
         this.floatingMarker = m;
-        window.add((Marker)floatingMarker);
+        layeredPane.add((Marker)floatingMarker, JLayeredPane.POPUP_LAYER);
+        //window.setComponentZOrder((Marker)floatingMarker, window.getComponentCount());
     }
 
     public Boolean isMarkerBeingDragged()
@@ -181,14 +192,24 @@ public class UIController {
     public Boolean tryToPlaceMarker()
     {
         Logger.log("Trying to place marker");
-        //Place marker
-        if(false)
+        Point p = MouseInfo.getPointerInfo().getLocation();
+
+        for (IGrabber gr : grabbers)
         {
-            Logger.log("Placed marker");
-            removeDraggedMarker();
-            return true;
+            System.err.println(gr.getRow());
+            // System.err.println(p);
+            // System.err.println( gr.checkIfContainsPoint(window,p));
+            if ( gr.getRow() == currentTurn && gr.checkIfContainsPoint(window,p))
+            {
+                Logger.log("Placing marker inside grabber");
+                gr.grabMarker(factory.createMarker(this.floatingMarker.getMarkerType()));
+                layeredPane.add((Marker)gr.getMarker(), JLayeredPane.MODAL_LAYER);
+                Logger.log("Placed marker");
+                removeDraggedMarker();
+                updateFrame();
+                return true;
+            }
         }
-        
         return false;
     }
 
@@ -219,6 +240,11 @@ public class UIController {
                 window.add((Marker)newM);
             }
         }
+    }
+
+    public void nextTurn()
+    {
+        this.currentTurn+=1;
     }
 
 
