@@ -159,6 +159,9 @@ public class UIController {
 
         if (blacks == 4)
             won();
+        
+        if (blacks != 4 && currentTurn == 6)
+            lost();
 
         int placed = 0;
         for (int i = 0; i<4; i++){
@@ -341,6 +344,19 @@ public class UIController {
         layeredPane.add(revealButton, JLayeredPane.PALETTE_LAYER);
     }
 
+    private void lost()
+    {
+        System.err.println("You LOST!");
+        wonText = new JTextArea("You LOST!");
+        wonText.setBounds(250, 75, 300, 30);
+        wonText.setBackground(Color.black);
+        wonText.setForeground(Color.white);
+        wonText.setEditable(false);
+        wonText.setFont(new Font("Arial", Font.PLAIN, 26));
+        layeredPane.add(wonText, JLayeredPane.POPUP_LAYER);
+        displayGoalPattern();
+        updateFrame();
+    }
     //#endregion
 
 }

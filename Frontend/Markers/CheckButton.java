@@ -67,15 +67,22 @@ public class CheckButton extends JButton implements ICheckButton {
         for (var p : guessPattern)
             System.err.print(p.name());
         
+        int[] taken = {0,0,0,0};
         //CHECK
         for(int i =0; i<4; i++)
         {
             if(goalPattern[i].name() == guessPattern[i].name())
-                ret[i] = Markers.BlackMarker;
+                {
+                    ret[i] = Markers.BlackMarker;
+                    taken[i] = 1;
+                }
             else {
                 for (int j=0; j<4;j++)
-                    if (goalPattern[j].name() == guessPattern[i].name())
+                    if (goalPattern[j].name() == guessPattern[i].name() && taken[j] == 0)
+                    {
                         ret[i] = Markers.WhiteMarker;
+                        taken[j] = 1;
+                    }
             }
             
         }
