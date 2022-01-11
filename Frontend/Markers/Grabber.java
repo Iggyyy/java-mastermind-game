@@ -3,10 +3,8 @@ package Frontend.Markers;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import java.awt.Color;
 import java.awt.Point;
-
 import Frontend.Markers.IMarker.Markers;
 
 public class Grabber extends JPanel implements IGrabber {
@@ -53,17 +51,7 @@ public class Grabber extends JPanel implements IGrabber {
     @Override
     public Boolean checkIfContainsPoint(JFrame frame, Point p) 
     { 
-        
         Point pp = SwingUtilities.convertPoint(frame, p, this);
-
-
-        System.err.print(p);
-        System.err.print(pp);
-        System.err.print(this.getLocation());
-        System.err.print(this.getRow());
-        System.err.print(this.contains(pp));
-        System.err.print('\n');
-
         return this.contains(pp);
     }
 

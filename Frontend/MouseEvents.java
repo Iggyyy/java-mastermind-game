@@ -2,7 +2,6 @@ package Frontend;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import Global.Logger;
 import java.awt.event.MouseListener;
 
 public class MouseEvents implements MouseMotionListener, MouseListener {

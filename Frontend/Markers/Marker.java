@@ -1,28 +1,18 @@
 package Frontend.Markers;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import java.awt.Color;
 
 public class Marker extends JPanel implements IMarker{
 
-    private JPanel selfPanel;
     private Markers selfMarker;
 
     public Marker(Markers markerColor) {
         super();
         setColor(markerColor);
-        this.setBounds(0, 0, 50, 50);
+        this.setBounds(9000, 9000, 50, 50);
         selfMarker = markerColor;
-    }
-
-    private JPanel getSelfJPanel() {
-        return this;
-    }
-
-    public JPanel getJPanel() {
-        return getSelfJPanel();
     }
 
     public void setPosition(int x, int y) {

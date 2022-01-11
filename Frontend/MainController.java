@@ -3,7 +3,6 @@ package Frontend;
 import Global.*;
 import Backend.*;
 
-
 public class MainController {
 
     public static void main(String[] args)
@@ -14,8 +13,8 @@ public class MainController {
         //Create necessary class instances
         IGameLogic gameLogic = classFactory.getGameLogic();
         gameLogic.initializeGame();
-
         
+        //Create UI and run game
         UIController uiController = new UIController(gameLogic, classFactory);
 
     }
