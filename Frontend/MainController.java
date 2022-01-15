@@ -16,6 +16,5 @@ public class MainController {
         
         //Create UI and run game
         UIController uiController = new UIController(gameLogic, classFactory);
-
     }
 }

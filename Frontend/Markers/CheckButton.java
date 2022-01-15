@@ -2,7 +2,6 @@ package Frontend.Markers;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.event.*;
@@ -83,8 +82,7 @@ public class CheckButton extends JButton implements ICheckButton {
                         ret[i] = Markers.WhiteMarker;
                         taken[j] = 1;
                     }
-            }
-            
+            }    
         }
 
         //DEBUG MESSAGE

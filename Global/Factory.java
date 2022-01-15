@@ -6,7 +6,6 @@ import Frontend.Markers.*;
 import Frontend.Markers.IMarker.Markers;
 import java.awt.Point;
 
-//Dependency Injection
 public class Factory {
 
     public IMarker createMarker(Markers markerType)
