@@ -1,11 +1,13 @@
-package Frontend.Markers;
+package Frontend.UIelements.Classes;
 
 import java.awt.Color;
 import java.awt.event.*;
 import javax.swing.JButton;
 
-import Frontend.UIController;
-import Frontend.Markers.IMarker.Markers;
+import Frontend.Controller;
+import Frontend.UIelements.Interfaces.IMarker;
+import Frontend.UIelements.Interfaces.ISpawner;
+import Frontend.UIelements.Interfaces.IMarker.Markers;
 import Global.Factory;
 
 public class Spawner extends JButton implements ISpawner {
@@ -13,9 +15,9 @@ public class Spawner extends JButton implements ISpawner {
     private Factory factory;
     private Markers ownMarkerType;
     private JButton ownButton;
-    private UIController UI;
+    private Controller UI;
 
-    public Spawner(UIController ui, Factory _fac, Markers _ownMarkerType){
+    public Spawner(Controller ui, Factory _fac, Markers _ownMarkerType){
         super();
         factory = _fac;
         UI = ui;
@@ -52,7 +54,9 @@ public class Spawner extends JButton implements ISpawner {
         if (m == Markers.PinkMarker)
             this.setBackground(Color.pink);
         if (m == Markers.OrangeMarker)
-            this.setBackground(Color.orange);
+            this.setBackground(Color.magenta);
+        if (m == Markers.YellowMarker)
+            this.setBackground(Color.yellow);
     }
     
     public IMarker instantiateMarker() {

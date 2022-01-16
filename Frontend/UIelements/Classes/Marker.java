@@ -1,6 +1,9 @@
-package Frontend.Markers;
+package Frontend.UIelements.Classes;
 
 import javax.swing.JPanel;
+
+import Frontend.UIelements.Interfaces.IMarker;
+import Frontend.UIelements.Interfaces.IMarker.Markers;
 
 import java.awt.Color;
 
@@ -30,7 +33,9 @@ public class Marker extends JPanel implements IMarker{
         if (m == Markers.PinkMarker)
             this.setBackground(Color.pink);
         if (m == Markers.OrangeMarker)
-            this.setBackground(Color.orange);
+            this.setBackground(Color.magenta);
+        if (m == Markers.YellowMarker)
+            this.setBackground(Color.yellow);
         if (m == Markers.BlackMarker)
             this.setBackground(Color.black);
         if (m == Markers.WhiteMarker)

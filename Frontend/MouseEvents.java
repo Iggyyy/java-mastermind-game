@@ -6,10 +6,10 @@ import java.awt.event.MouseListener;
 
 public class MouseEvents implements MouseMotionListener, MouseListener {
 
-    UIController UI;
+    Controller UI;
     long last_time = System.nanoTime();
 
-    public MouseEvents(UIController ui){
+    public MouseEvents(Controller ui){
         UI = ui;
     }
 

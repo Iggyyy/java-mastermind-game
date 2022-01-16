@@ -1,4 +1,4 @@
-package Frontend.Markers;
+package Frontend.UIelements.Interfaces;
 
 public interface IMarker {
     public void setPosition(int x, int y);
@@ -11,6 +11,7 @@ public interface IMarker {
         BlueMarker,
         PinkMarker,
         OrangeMarker,
+        YellowMarker,
         BlackMarker,
         WhiteMarker
     }

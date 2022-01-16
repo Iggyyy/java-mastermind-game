@@ -1,9 +1,15 @@
 package Global;
 
-import Backend.*;
 import Frontend.*;
-import Frontend.Markers.*;
-import Frontend.Markers.IMarker.Markers;
+import Frontend.UIelements.*;
+import Frontend.UIelements.Classes.Grabber;
+import Frontend.UIelements.Classes.Marker;
+import Frontend.UIelements.Classes.Spawner;
+import Frontend.UIelements.Interfaces.IGrabber;
+import Frontend.UIelements.Interfaces.IMarker;
+import Frontend.UIelements.Interfaces.ISpawner;
+import Frontend.UIelements.Interfaces.IMarker.Markers;
+
 import java.awt.Point;
 
 public class Factory {
@@ -13,12 +19,7 @@ public class Factory {
         return new Marker(markerType);
     }
 
-    public IGameLogic getGameLogic()
-    {
-        return new GameLogic();
-    }
-
-    public ISpawner createSpawner(UIController ui, Factory fac, Markers markerType)
+    public ISpawner createSpawner(Controller ui, Factory fac, Markers markerType)
     {
         return new Spawner(ui, fac, markerType);
     }

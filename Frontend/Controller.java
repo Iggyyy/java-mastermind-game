@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.EventListener;
 import java.util.Random;
 
@@ -26,20 +27,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import Backend.IGameLogic;
-import Frontend.Markers.CheckButton;
-import Frontend.Markers.Grabber;
-import Frontend.Markers.ICheckButton;
-import Frontend.Markers.IGrabber;
-import Frontend.Markers.IMarker;
-import Frontend.Markers.ISpawner;
-import Frontend.Markers.Marker;
-import Frontend.Markers.Spawner;
+import Frontend.UIelements.Classes.CheckButton;
+import Frontend.UIelements.Classes.Grabber;
+import Frontend.UIelements.Classes.Marker;
+import Frontend.UIelements.Classes.Spawner;
+import Frontend.UIelements.Interfaces.ICheckButton;
+import Frontend.UIelements.Interfaces.IGrabber;
+import Frontend.UIelements.Interfaces.IMarker;
+import Frontend.UIelements.Interfaces.ISpawner;
+import Frontend.UIelements.Interfaces.IMarker.Markers;
 import Global.Factory;
 import Global.Logger;
-import Frontend.Markers.IMarker.Markers;
 
-public class UIController {
+public class Controller {
 
     //#region variables
     //Variables
@@ -47,7 +47,7 @@ public class UIController {
     public Boolean displayedPattern = false;
 
     //Classes
-    IGameLogic gameLogic;
+    //IGameLogic gameLogic;
     Factory factory;
 
     //Swing
@@ -206,10 +206,15 @@ public class UIController {
     private void createGoalPattern()
     {
         goalPattern = new Markers[4];
+        ArrayList<Integer> set = new ArrayList<Integer>();
+        for (int k = 0; k<6; k++)
+            set.add(k);
+        Collections.shuffle(set);
+        set.remove(0);
+
         for (int i =0 ; i<4; i++)
         {
-            goalPattern[i] = Markers.values()[new Random().nextInt(4)];
-
+            goalPattern[i] = Markers.values()[set.get(i)];
             IMarker m = factory.createMarker(goalPattern[i]);
             m.setPosition(235 + i*85, 75);
             goalPatternMarkersDisplay.add(m);
@@ -225,9 +230,8 @@ public class UIController {
         updateFrame();
     }
 
-    UIController(IGameLogic gL, Factory fac)
+    Controller(Factory fac)
     {
-        this.gameLogic = gL;
         this.factory = fac;
 
         spawners = new ArrayList<ISpawner>();
@@ -275,12 +279,12 @@ public class UIController {
             spawners.add(factory.createSpawner(this, factory, m));
         }
         spawnersPanel = new JPanel();
-        spawnersPanel.setBounds(200, 800, 385, 80);
+        spawnersPanel.setBounds(150, 800, 475, 80);
         spawnersPanel.setBackground(Color.lightGray);
         for (int i = 0; i<spawners.size()-2; i++)
         {
             ISpawner s = spawners.get(i);
-            s.setPosition(215 + 75*i, 815);
+            s.setPosition(175 + 75*i, 815);
             window.add((Spawner)s);  
         }
         layeredPane.add(spawnersPanel, JLayeredPane.PALETTE_LAYER);  

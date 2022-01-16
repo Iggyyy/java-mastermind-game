@@ -1,19 +1,22 @@
-package Frontend.Markers;
+package Frontend.UIelements.Classes;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.event.*;
-import Frontend.UIController;
-import Frontend.Markers.IMarker.Markers;
+import Frontend.Controller;
+import Frontend.UIelements.Interfaces.ICheckButton;
+import Frontend.UIelements.Interfaces.IGrabber;
+import Frontend.UIelements.Interfaces.IMarker;
+import Frontend.UIelements.Interfaces.IMarker.Markers;
 
 public class CheckButton extends JButton implements ICheckButton {
 
-    UIController UI;
+    Controller UI;
     int row;
 
-    public CheckButton(UIController ui, int _row)
+    public CheckButton(Controller ui, int _row)
     {
         super();
         UI = ui;
@@ -37,9 +40,15 @@ public class CheckButton extends JButton implements ICheckButton {
 
         //CHECK 
         for (IGrabber g : UI.grabbers)
-        {
+        {   
             if(g.getRow() == row)
             {
+                if (g.getMarker() == null)
+                {
+                    System.err.println("Empty grabber!");    
+                    return;
+                }
+
                 try {
                     pattern[g.getID()] = g.getGrabbedMarkerType();
                 } catch (Exception e) {
@@ -71,10 +80,10 @@ public class CheckButton extends JButton implements ICheckButton {
         for(int i =0; i<4; i++)
         {
             if(goalPattern[i].name() == guessPattern[i].name())
-                {
-                    ret[i] = Markers.BlackMarker;
-                    taken[i] = 1;
-                }
+            {
+                ret[i] = Markers.BlackMarker;
+                taken[i] = 1;
+            }
             else {
                 for (int j=0; j<4;j++)
                     if (goalPattern[j].name() == guessPattern[i].name() && taken[j] == 0)

@@ -1,9 +1,10 @@
-package Frontend.Markers;
+package Frontend.UIelements.Interfaces;
 
-import Frontend.Markers.IMarker.Markers;
 import java.awt.Point;
 
 import javax.swing.JFrame;
+
+import Frontend.UIelements.Interfaces.IMarker.Markers;
 
 public interface IGrabber{
     public void grabMarker(IMarker marker);

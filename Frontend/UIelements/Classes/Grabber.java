@@ -1,11 +1,16 @@
-package Frontend.Markers;
+package Frontend.UIelements.Classes;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import Frontend.UIelements.Interfaces.IGrabber;
+import Frontend.UIelements.Interfaces.IMarker;
+import Frontend.UIelements.Interfaces.IMarker.Markers;
+import Global.Logger;
+
 import java.awt.Color;
 import java.awt.Point;
-import Frontend.Markers.IMarker.Markers;
 
 public class Grabber extends JPanel implements IGrabber {
 
@@ -23,6 +28,11 @@ public class Grabber extends JPanel implements IGrabber {
 
     @Override
     public void grabMarker(IMarker marker) {
+        if (storedMarker != null)
+        {
+            Logger.log("Grabber already has marker assigned!");
+            return;
+        }
         storedMarker = marker;
         storedMarker.setPosition(this.getPosition().x, this.getPosition().y);
     }
@@ -57,7 +67,7 @@ public class Grabber extends JPanel implements IGrabber {
 
     @Override
     public IMarker getMarker() {
-        return this.storedMarker;
+        return storedMarker;
     }
 
 

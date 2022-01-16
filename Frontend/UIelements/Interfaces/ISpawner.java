@@ -1,8 +1,8 @@
-package Frontend.Markers;
+package Frontend.UIelements.Interfaces;
 
 import javax.swing.JButton;
 
-import Frontend.Markers.IMarker.Markers;
+import Frontend.UIelements.Interfaces.IMarker.Markers;
 
 public interface ISpawner {
     public IMarker instantiateMarker();

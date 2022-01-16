@@ -1,4 +1,4 @@
-package Frontend.Markers;
+package Frontend.UIelements.Interfaces;
 
 public interface ICheckButton {
     public void checkRow();
