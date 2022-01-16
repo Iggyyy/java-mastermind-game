@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.EventListener;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -51,6 +52,8 @@ public class Controller {
     Factory factory;
 
     //Swing
+    public ImageIcon img;
+    public JLabel imgOverlay;
     public JFrame window;
     public JTextArea welcomeText;
     public JTextArea wonText;
@@ -263,15 +266,25 @@ public class Controller {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(Color.BLACK);
         window.setLayout(null);
+        window.setTitle("MASTERMIND 90s");
+
+        img = new ImageIcon("./images/logo.png");
+        window.setIconImage(img.getImage());
+        
+        imgOverlay = new JLabel();
+        imgOverlay.setIcon(img);
+        imgOverlay.setBounds(25,20, 100, 100);
+        imgOverlay.setVisible(true);
+        layeredPane.add(imgOverlay, JLayeredPane.FRAME_CONTENT_LAYER);
         
         //TEXT
-        welcomeText = new JTextArea("MASTERMIND");
-        welcomeText.setBounds(250, 10, 300, 100);
-        welcomeText.setBackground(Color.black);
-        welcomeText.setForeground(Color.white);
-        welcomeText.setEditable(false);
-        welcomeText.setFont(new Font("Arial", Font.PLAIN, 26));
-        layeredPane.add(welcomeText, JLayeredPane.PALETTE_LAYER);
+        // welcomeText = new JTextArea("MASTERMIND");
+        // welcomeText.setBounds(0, 0, 300, 25);
+        // welcomeText.setBackground(Color.black);
+        // welcomeText.setForeground(Color.white);
+        // welcomeText.setEditable(false);
+        // welcomeText.setFont(new Font("Arial", Font.PLAIN, 26));
+        // layeredPane.add(welcomeText, JLayeredPane.PALETTE_LAYER);
 
         //SPAWNERS
         for (Markers m : Markers.values())
